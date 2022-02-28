@@ -1,7 +1,21 @@
-var builder = WebApplication.CreateBuilder(args);
+using Management.Web.Models;
+using Management.Web.Services;
+using Microsoft.EntityFrameworkCore;
 
+var builder = WebApplication.CreateBuilder(args);
+// http://localhost:44343/api/Customer
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddMvc();
+builder.Services.AddMvc(option => option.EnableEndpointRouting = false);
+
+builder.Services.AddDbContext<NorthwindContext>(option =>
+{
+    option.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Northwind;Trusted_Connection=True;");
+});
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICategoryInterface, CategoryImpl>();
 
 var app = builder.Build();
 
@@ -17,7 +31,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseMvc();
 app.UseAuthorization();
 
 app.MapControllerRoute(
