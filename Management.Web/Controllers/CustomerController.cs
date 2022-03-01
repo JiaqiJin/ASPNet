@@ -31,7 +31,17 @@ namespace Management.Web.Controllers
             var resultCustomes = mapper.Map<IEnumerable<CustomerDTO>>(customers);
 
             return Ok(resultCustomes);
-            
+
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetCustomer(string id)
+        {
+            var customer = _custumerRepository.GetCustomers(id, false);
+
+            var resultCustomer = mapper.Map<CustomerDTO>(customer);
+
+            return Ok(resultCustomer);
         }
     }
 }

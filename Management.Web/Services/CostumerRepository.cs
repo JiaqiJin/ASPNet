@@ -1,4 +1,5 @@
 ﻿using Management.Web.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Management.Web.Services
 {
@@ -13,17 +14,19 @@ namespace Management.Web.Services
 
         public void Add(string costumerId, Order orders)
         {
-            throw new NotImplementedException();
+            var customer = GetCustomers(costumerId, false);
+            customer.Orders.Add(orders);
         }
 
         public bool CostumerExistes(string costumerId)
         {
-            throw new NotImplementedException();
+            return _contex.Customers
+                .Any(c => c.CustomerId == costumerId);
         }
 
         public void DeleteOrder(Order orders)
         {
-            throw new NotImplementedException();
+            _contex.Orders.Remove(orders);
         }
 
         public IEnumerable<Customer> GetCustomers()
@@ -33,22 +36,42 @@ namespace Management.Web.Services
 
         public Customer GetCustomers(string customerId, bool includeOrders)
         {
-            throw new NotImplementedException();
+            if(includeOrders)
+            {
+                return _contex.Customers
+                   .Include(c => c.Orders)
+                   .Where(c => c.CustomerId == customerId)
+                   .FirstOrDefault();
+            }
+
+            return _contex.Customers
+               .Where(c => c.CustomerId == customerId)
+               .FirstOrDefault();
+        }
+
+        public Employee GetEmployerFromOrder(string customerId, int oderId)
+        {
+            var order = GetOrders(customerId, oderId);
+            return order.Employee;
         }
 
         public IEnumerable<Order> GetOrders(string custumerId)
         {
-            throw new NotImplementedException();
+            return _contex.Orders
+                .Where(c => c.CustomerId == custumerId).ToList();
         }
 
         public Order GetOrders(string customerId, int oderId)
         {
-            throw new NotImplementedException();
+            return _contex.Orders
+                .Where(c=> c.CustomerId == customerId
+                && c.OrderId == oderId)
+                .FirstOrDefault();
         }
 
         public bool Save()
         {
-            throw new NotImplementedException();
+            return (_contex.SaveChanges() >= 0);
         }
     }
 }

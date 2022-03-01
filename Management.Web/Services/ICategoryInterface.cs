@@ -5,12 +5,12 @@ namespace Management.Web.Services
     public interface ICategoryInterface
     {
         IEnumerable<Category> GetCategories();
-        Category GetCategories(string categotyId);
-        IEnumerable<Product> GetProducts(string categoryId);
-        Order GetProducts(string categoryId, int productId);
-        bool CategoryExiste(string categoryId);
+        Category GetCategories(int categotyId);
+        IEnumerable<Product> GetProducts(int categoryId);
+        Product GetProducts(int categoryId, int productId);
+        bool CategoryExiste(int categoryId);
         bool Save();
-        void Add(string categoryId, Product product);
+        void AddProduct(int categoryId, Product product);
         void DeleteOrder(Product product);
     }
 }

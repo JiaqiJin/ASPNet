@@ -12,5 +12,6 @@ namespace Management.Web.Services
         bool Save();
         void Add(string costumerId, Order orders);
         void DeleteOrder(Order orders);
+        Employee GetEmployerFromOrder(string customerId, int oderId);
     }
 }

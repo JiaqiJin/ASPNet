@@ -11,12 +11,13 @@ namespace Management.Web.Services
             _contex = contex;
         }
 
-        public void Add(string categoryId, Product product)
+        public void AddProduct(int categoryId, Product product)
         {
-            throw new NotImplementedException();
+            var category = GetCategories(categoryId);
+            category.Products.Add(product);
         }
 
-        public bool CategoryExiste(string categoryId)
+        public bool CategoryExiste(int categoryId)
         {
             throw new NotImplementedException();
         }
@@ -31,24 +32,30 @@ namespace Management.Web.Services
             return _contex.Categories.OrderBy(c => c.CategoryName).ToList();
         }
 
-        public Category GetCategories(string categotyId)
+        public Category GetCategories(int categotyId)
         {
-            throw new NotImplementedException();
+            return _contex.Categories
+                .Where(c => c.CategoryId == categotyId)
+                .FirstOrDefault();
         }
 
-        public IEnumerable<Product> GetProducts(string categoryId)
+        public IEnumerable<Product> GetProducts(int categoryId)
         {
-            throw new NotImplementedException();
+            return _contex.Products
+                .Where(c => c.CategoryId == categoryId).ToList();
         }
 
-        public Order GetProducts(string categoryId, int productId)
+        public Product GetProducts(int categoryId, int productId)
         {
-            throw new NotImplementedException();
+            return _contex.Products
+                .Where(c => c.CategoryId == categoryId
+                && c.ProductId == productId)
+                .FirstOrDefault();
         }
 
         public bool Save()
         {
-            throw new NotImplementedException();
+            return (_contex.SaveChanges() >= 0);
         }
     }
 }

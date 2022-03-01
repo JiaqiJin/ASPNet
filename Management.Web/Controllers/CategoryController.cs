@@ -34,5 +34,19 @@ namespace Management.Web.Controllers
             return Ok(resultCategories);
 
         }
+
+        [HttpGet("{categoryId}")]
+        public IActionResult GetProduct(int categoryId)
+        {
+            var categoriy = _categoryInterface.GetCategories(categoryId);
+
+            var resultCategory = mapper.Map<CategoryDTO>(categoriy);
+
+            if (resultCategory == null)
+                return NotFound();
+
+            return Ok(resultCategory);
+
+        }
     }
 }
