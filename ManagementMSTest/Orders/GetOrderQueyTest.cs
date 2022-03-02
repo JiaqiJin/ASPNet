@@ -65,7 +65,7 @@ namespace Management.Web.Orders
             }
 
             [Test]
-            public void GetOrders_InpputOrder_ReturnTrue()
+            public void GetOrders_InputOrder_ReturnTrue()
             {
                 Order localOrder = new Order();
                 localOrder.CustomerId = "Juan";
