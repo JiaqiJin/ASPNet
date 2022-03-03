@@ -17,11 +17,17 @@ namespace Management.Web.Folder
         public CustomerRepository _customerRepository;
         public ManagementTestInit()
         {
+            // Product
+            var product = new Product();
+            product.CategoryId = 1;
+            product.ProductName = "adas";
+            product.UnitPrice = 10.0m;
             // Category
             var _category = new Management.Web.Models.Category();
             _category.CategoryId = 1;
             _category.CategoryName = "Test";
             _category.Products = new List<Product>();
+            _category.Products.Add(product);
 
             // Order
             var order = new Order();
@@ -41,6 +47,7 @@ namespace Management.Web.Folder
                 .Options;
 
             _context = new NorthwindContext(option);
+            _context.Products.AddRange(product);
             _context.Categories.AddRange(_category);
             _context.Customers.AddRange(customer);
             _context.Orders.AddRange(order);

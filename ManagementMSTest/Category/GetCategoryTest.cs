@@ -58,7 +58,7 @@ namespace Management.Web.Category
             }
 
             [Test]
-            public void GetCategory_InpputOrder_ReturnTrue()
+            public void GetCategory_InputOrder_ReturnTrue()
             {
                 var localCategory = new Management.Web.Models.Category();
                 localCategory.CategoryId = 1;
@@ -68,6 +68,19 @@ namespace Management.Web.Category
 
                 Assert.That(result.CategoryName, Is.EqualTo(localCategory.CategoryName));
             }
+
+            [Test]
+            public void GetProduct_InputCategoryId_ReturnTrue()
+            {
+                var localProduct = new Management.Web.Models.Product();
+                localProduct.ProductId = 1;
+                localProduct.ProductName = "Test";
+
+                var categoryImpl = _init._categoryImpl;
+                var result = categoryImpl.GetProducts(1,1);
+
+                Assert.That(localProduct.ProductId, Is.EqualTo(result.ProductId));
         }
         }
+    }
 }
